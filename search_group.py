@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-调用线上政治人物识别接口识别图片
+调用线上以图搜图接口识别图片
 input: urllist file
 output: json file
 
