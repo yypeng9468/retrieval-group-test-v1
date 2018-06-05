@@ -1,26 +1,48 @@
 import json
+import argparse
 
-file = open('/Users/pengyuyan/Desktop/org_list.txt.retrieval.json','r')
-res = []
-a = 0
+def parse_args():
+    """
+    Parse input arguments.
+    :return:
+    """
+    parser = argparse.ArgumentParser(description='以图搜图API测试')
+    parser.add_argument('--ak', dest='access_key', help='access_key for qiniu account',
+                        type=str)
 
-for line in file.readlines():
-    dic = json.loads(line)
-    if not "error" in dic.keys():
-        a += 1
-        img_url = dic["url"]
-        im_num = img_url.split('.')[-2].split('/')[-1].lstrip('image_group_test_')
-        t = {"url": img_url, "true":0, "simialr_uri":[]}
-        for i in dic["result"]:
-            uri = []
-            if (i["uri"].split('/'))[4] == "similar" and (im_num in (i["uri"].split('/'))[5]):
-                t["simialr_uri"].append(i)
-                t["true"] += 1
-    res.append(t)
+    parser.add_argument('--sk', dest='secret_key', help='secret_key for qiniu account',
+                        type=str)
 
-r = 0
-for i in range(a):
-    r += res[i]["true"]
+    parser.add_argument('--in', dest='json_file', help='json file',
+                        type=str)
 
-correct = r/float(a)
-print ("The top-5 correct percentage is %f" % correct)
+    return parser.parse_args()
+
+
+if __name__ == '__main__':
+    args = parse_args()
+
+    file = open(args.json_file,'r')
+    res = []
+    a = 0
+
+    for line in file.readlines():
+        dic = json.loads(line)
+        if not "error" in dic.keys():
+            a += 1
+            img_url = dic["url"]
+            im_num = img_url.split('.')[-2].split('/')[-1].lstrip('image_group_test_')
+            t = {"url": img_url, "true":0, "simialr_uri":[]}
+            for i in dic["result"]:
+                uri = []
+                if (i["uri"].split('/'))[4] == "similar" and (im_num in (i["uri"].split('/'))[5]):
+                    t["simialr_uri"].append(i)
+                    t["true"] += 1
+        res.append(t)
+
+    r = 0
+    for i in range(a):
+        r += res[i]["true"]
+
+    correct = r/float(a)
+    print ("The top-5 correct percentage is %f" % correct)

@@ -34,9 +34,16 @@ usage: python2 summay-group.py --ak access_key --sk secret_key
 返回现有图片库中的所有图片及其相关信息
 
 
+[top5_correct.py](./top5_correct.py)
+
+usage: python2 top5_correct.py --ak access_key --sk secret_key --in json_file
+计算以图搜图算法的top5准确率
+
+
 [Argus.ImageGroup.md](./Argus.ImageGroup.md)
 
 API文档说明
+
 
 
 
