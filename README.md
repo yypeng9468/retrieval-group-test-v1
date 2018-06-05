@@ -1,4 +1,4 @@
-# retrieval-group-test-v1
+# retrieval-group-test-v0.1
 [new-group.py](./new_group.py)
 
 usage: python2 new-group.py --ak access_key --sk secret_key
