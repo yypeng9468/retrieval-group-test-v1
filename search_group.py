@@ -26,7 +26,7 @@ def retrieval_search_group(access_key, secret_key, url):
 		"uri": url
 	},
 	"params": {
-		"limit": 5
+		"limit": 10
 	}
 }
     token = QiniuMacAuth(access_key, secret_key).token_of_request(

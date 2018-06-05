@@ -44,5 +44,5 @@ if __name__ == '__main__':
     for i in range(a):
         r += res[i]["true"]
 
-    correct = r/float(a)
+    correct = r/(float(a)*5)
     print ("The top-5 correct percentage is %f" % correct)
