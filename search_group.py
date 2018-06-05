@@ -4,7 +4,7 @@
 input: urllist file
 output: json file
 
-@author: songqian
+@author: pengyuyan
 """
 
 import requests

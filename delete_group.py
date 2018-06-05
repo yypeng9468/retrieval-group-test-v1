@@ -4,7 +4,7 @@
 input: urllist file
 output: json file
 
-@author: songqian
+@author: pengyuyan
 """
 
 import requests
@@ -64,10 +64,10 @@ def parse_args():
 
 if __name__ == '__main__':
 
-    # args = parse_args()
+    args = parse_args()
 
     # with open(args.urllist_file) as urllist_f, \
-    #         open(args.urllist_file+'.politician_online.json', 'w+') as json_f,\
+    #         open(args.urllist_file+'.retrieval.json', 'w+') as json_f,\
     #         open(args.urllist_file+'.error.log', 'w+') as error_f:
     #     url = urllist_f.readline().rstrip('\n')
     #     while url:

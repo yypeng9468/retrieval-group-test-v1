@@ -4,7 +4,7 @@
 input: urllist file
 output: json file
 
-@author: songqian
+@author: pengyuyan
 """
 
 import requests
@@ -66,19 +66,19 @@ if __name__ == '__main__':
 
     args = parse_args()
 
-    with open(args.urllist_file) as urllist_f, \
-            open(args.urllist_file+'.politician_online.json', 'w+') as json_f,\
-            open(args.urllist_file+'.error.log', 'w+') as error_f:
-        url = urllist_f.readline().rstrip('\n')
-        while url:
-            print url
-            # retrieval_new_group(args.access_key, args.secret_key, url)
-            try:
-                result = retrieval_new_group(args.access_key, args.secret_key, url)
-                json_f.write(result+'\n')
-            except Exception, e:
-                print e
-                error_f.writelines(url+', '+str(e)+'\n')
-            url = urllist_f.readline().rstrip('\n')
-    retrieval_search_group("Sj2l3BjGqs47X7fxS_JtrBIsyn2StiV1RI8dppqR", "DXVZR5iqJlHw7EiWTYrsAgmcV4pVrN8Tb0vfO_Lg")
+    # with open(args.urllist_file) as urllist_f, \
+    #         open(args.urllist_file+'.retrieval.json', 'w+') as json_f,\
+    #         open(args.urllist_file+'.error.log', 'w+') as error_f:
+    #     url = urllist_f.readline().rstrip('\n')
+    #     while url:
+    #         print url
+    #         # retrieval_new_group(args.access_key, args.secret_key, url)
+    #         try:
+    #             result = retrieval_new_group(args.access_key, args.secret_key, url)
+    #             json_f.write(result+'\n')
+    #         except Exception, e:
+    #             print e
+    #             error_f.writelines(url+', '+str(e)+'\n')
+    #         url = urllist_f.readline().rstrip('\n')
+    retrieval_search_group(args.access_key, args.secret_key)
     print datetime.datetime.now(), 'done'
