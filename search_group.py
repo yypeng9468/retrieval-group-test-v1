@@ -42,6 +42,7 @@ def retrieval_search_group(access_key, secret_key, url):
     response = requests.post(req_url, headers=headers, data=json.dumps(data))
 
     print response.text
+    print response.headers
     print response.text.replace('false', 'False').replace('true', 'True')
     ret = eval(response.text.replace('false', 'False').replace('true', 'True'))
     ret['url'] = url
