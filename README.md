@@ -34,7 +34,7 @@ usage: python2 summay-group.py --ak access_key --sk secret_key
 返回现有图片库中的所有图片及其相关信息
 
 
-[Argus.ImageGroup.md]
+[Argus.ImageGroup.md](./Argus.ImageGroup.md)
 
 API文档说明
 

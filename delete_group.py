@@ -80,5 +80,5 @@ if __name__ == '__main__':
     #             print e
     #             error_f.writelines(url+', '+str(e)+'\n')
     #         url = urllist_f.readline().rstrip('\n')
-    retrieval_delete_group("Sj2l3BjGqs47X7fxS_JtrBIsyn2StiV1RI8dppqR", "DXVZR5iqJlHw7EiWTYrsAgmcV4pVrN8Tb0vfO_Lg")
+    retrieval_delete_group(args.access_key, args.secret_key)
     print datetime.datetime.now(), 'done'
