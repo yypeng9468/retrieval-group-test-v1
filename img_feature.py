@@ -19,7 +19,7 @@ def retrieval_upload_img(access_key, secret_key, url):
     以图搜图传图
     :return:
     """
-    req_url = 'http://argus.atlab.ai/v1/image/group/retrieval-fortest-v0_1_/add'
+    req_url = 'http://argus.atlab.ai/v1/image/group/weipai-data/add'
     data = {
         "data": [
             {"uri": url}
@@ -39,7 +39,7 @@ def retrieval_upload_img(access_key, secret_key, url):
     token = QiniuMacAuth(access_key, secret_key).token_of_request(
         method='POST',
         host='argus.atlab.ai',
-        url="/v1/image/group/retrieval-fortest-v0_1_/add",
+        url="/v1/image/group/weipai-data/add",
         content_type='application/json',
         qheaders='',
         body=json.dumps(data)
@@ -94,3 +94,7 @@ if __name__ == '__main__':
             url = urllist_f.readline().rstrip('\n')
 
     print datetime.datetime.now(), 'done'
+
+    """
+    python2 img_feature.py --ak 8MbTywnGQZ75BnWL9S1P8PZn-9wCqy6fIs4MyllI --sk yyK5vgoqogbCajpdhKd1gB9B317CB9nVePwySIQk --in /Users/pengyuyan/Desktop/base.txt 
+    """

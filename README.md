@@ -39,6 +39,9 @@ usage: python2 summay-group.py --ak access_key --sk secret_key
 usage: python2 top5_correct.py --ak access_key --sk secret_key --in json_file
 计算以图搜图算法的top5准确率
 
+[cnn_evaluation.py](./cnn_evaluation.py)
+计算以图搜图算法的recall
+
 
 [Argus.ImageGroup.md](./Argus.ImageGroup.md)
 

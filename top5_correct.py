@@ -6,7 +6,7 @@ def parse_args():
     Parse input arguments.
     :return:
     """
-    parser = argparse.ArgumentParser(description='以图搜图API测试')
+    parser = argparse.ArgumentParser(description='')
     parser.add_argument('--ak', dest='access_key', help='access_key for qiniu account',
                         type=str)
 

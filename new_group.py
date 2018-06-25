@@ -21,7 +21,7 @@ def retrieval_new_group(access_key, secret_key):
     :param url: 要识别的图片URL
     :return:
     """
-    req_url = 'http://argus.atlab.ai/v1/image/group/retrieval-fortest-v0_1_/new'
+    req_url = 'http://argus.atlab.ai/v1/image/group/weipai-data/new'
     data = {
         "data": 
         [
@@ -32,7 +32,7 @@ def retrieval_new_group(access_key, secret_key):
     token = QiniuMacAuth(access_key, secret_key).token_of_request(
         method='POST',
         host='argus.atlab.ai',
-        url="/v1/image/group/retrieval-fortest-v0_1_/new",
+        url="/v1/image/group/weipai-data/new",
         content_type='application/json',
         qheaders='',
         body=json.dumps(data)
@@ -88,3 +88,8 @@ if __name__ == '__main__':
     #         url = urllist_f.readline().rstrip('\n')
     retrieval_new_group(args.access_key, args.secret_key)
     print datetime.datetime.now(), 'done'
+
+    """
+    commad:
+        python2 new_group.py --ak 8MbTywnGQZ75BnWL9S1P8PZn-9wCqy6fIs4MyllI --sk yyK5vgoqogbCajpdhKd1gB9B317CB9nVePwySIQ
+    """

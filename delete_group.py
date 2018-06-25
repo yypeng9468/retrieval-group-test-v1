@@ -21,12 +21,12 @@ def retrieval_delete_group(access_key, secret_key):
     :param url: 要识别的图片URL
     :return:
     """
-    req_url = 'http://argus.atlab.ai/v1/image/group/retrieval-fortest-v0_1/delete'
+    req_url = 'http://argus.atlab.ai/v1/image/group/weipai-test/delete'
     data = {"images":["BwAAAKaNDYQ55DQV", "aaa"]}
     token = QiniuMacAuth(access_key, secret_key).token_of_request(
         method='POST',
         host='argus.atlab.ai',
-        url="/v1/image/group/retrieval-fortest-v0_1/delete",
+        url="/v1/image/group/weipai-test/delete",
         content_type='application/json',
         qheaders='',
         body=json.dumps(data)

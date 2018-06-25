@@ -20,19 +20,19 @@ def retrieval_search_group(access_key, secret_key, url):
     :param url: 要识别的图片URL
     :return:
     """
-    req_url = 'http://argus.atlab.ai/v1/image/group/retrieval-fortest-v0_1_/search'
+    req_url = 'http://argus.atlab.ai/v1/image/group/weipai-test/search'
     data = {
 	"data": {
 		"uri": url
 	},
 	"params": {
-		"limit": 10
+		"limit": 1
 	}
 }
     token = QiniuMacAuth(access_key, secret_key).token_of_request(
         method='POST',
         host='argus.atlab.ai',
-        url="/v1/image/group/retrieval-fortest-v0_1_/search",
+        url="/v1/image/group/weipai-test/search",
         content_type='application/json',
         qheaders='',
         body=json.dumps(data)
@@ -89,3 +89,7 @@ if __name__ == '__main__':
             url = urllist_f.readline().rstrip('\n')
     
     print datetime.datetime.now(), 'done'
+
+    """
+    python2 search_group.py --ak 8MbTywnGQZ75BnWL9S1P8PZn-9wCqy6fIs4MyllI --sk yyK5vgoqogbCajpdhKd1gB9B317CB9nVePwySIQk --in /Users/pengyuyan/Desktop/weipai-test/query.txt
+    """
