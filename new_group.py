@@ -30,7 +30,6 @@ def retrieval_new_group(access_key, secret_key, cfg):
         }
     }
 
-        
     token = QiniuMacAuth(access_key, secret_key).token_of_request(
         method='POST',
         host='argus.atlab.ai',
@@ -61,6 +60,8 @@ def parse_args():
                         type=str)
 
     parser.add_argument('--sk', dest='secret_key', help='secret_key for qiniu account',
+                        type=str)
+    parser.add_argument('--config', dest='cfg', help='预期图片数目',
                         type=str)
 
     return parser.parse_args()

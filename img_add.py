@@ -14,7 +14,7 @@ import argparse
 import datetime
 from multiprocessing import Pool
 
-def retrieval_upload_img(url):
+def retrieval_upload_img(access_key, secret_key, url):
     """
     以图搜图传图
     :param url:图片的uri, 必选
@@ -77,6 +77,7 @@ def get_list_all(file_name):
         for i in range(len(lines)):
             url_list.append(lines[i].strip('\n'))
     return url_list
+    
 if __name__ == '__main__':
     args = parse_args()
     with open(args.urllist_file) as urllist_f, \
@@ -87,7 +88,7 @@ if __name__ == '__main__':
         list_all = get_list_all(args.urllist_file)
         try: 
             pool = Pool(processes=20)
-            result = pool.map(retrieval_upload_img,list_all)
+            result = pool.map(retrieval_upload_img, args.access_key, args.secret_key, list_all)
             pool.close()
             pool.join()
             for j in range(len(result)):

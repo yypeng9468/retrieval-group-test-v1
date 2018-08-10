@@ -2,6 +2,22 @@
 import json
 import argparse
 
+{
+    "search_results": [
+        {
+            "results":[
+                {
+                    "id":"",
+                    "score":0.9,
+                    "tag":"",
+                    "desc":{}
+                }
+            ]
+        },
+        ...
+    ]
+}
+
 def parse_args():
     """
     Parse input arguments.
@@ -17,6 +33,9 @@ def parse_args():
     parser.add_argument('--in', dest='json_file', help='json file',
                         type=str)
 
+    parser.add_argument('--url', dest='url_file', help='query url file',
+                        type=str)
+
     return parser.parse_args()
 
 
@@ -26,21 +45,25 @@ if __name__ == '__main__':
     file = open(args.json_file,'r')
     res = []
     a = 0
+    j = 0
+
+    with open(args.url_file, "r") as u:
+        img_urls = u.readlines()
 
     for line in file.readlines():
+        j += 1 
         dic = json.loads(line)
-        img_url = dic["url"]
+        img_url = img_urls[j-1]
         t = {"url": img_url, "true":0, "simialr_uri":[]}
         if not "error" in dic.keys():
             a += 1
             #im_num = img_url.split('.')[-2].split('/')[-1].lstrip('image_group_test_')
             im_num = img_url.split('.')[-2].split('/')[-1]#.lstrip('image_group_test_')
             print(im_num)
-            for i in dic["result"]:
+            for i in dic["search_results"]:
                 uri = []
-                #print((i["uri"].split('/'))[4].split('__')[0]=="eval",(i["uri"].split('/'))[4].split('-')[0])
-                print((i["uri"].split('/'))[4])
-                if ((i["uri"].split('/'))[4].split('__')[0]=="eval") and (im_num in (i["uri"].split('/'))[4].split('-')[0]):
+                print((i["results"].split('/'))[4])
+                if ((i["results"].split('/'))[4].split('__')[0]=="eval") and (im_num in (i["uri"].split('/'))[4].split('-')[0]):
                     t["simialr_uri"].append(i)
                     t["true"] += 1
             res.append(t)
