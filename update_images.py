@@ -14,7 +14,7 @@ import argparse
 import datetime
 from multiprocessing import Pool
 
-def retrieval_renew_images(tag, marker, limit):
+def retrieval_renew_images(access_key, secret_key):
     """
     更新 id 对应的图片内容以及 tag、desc
     :return: 200 OK
@@ -60,7 +60,7 @@ if __name__ == '__main__':
     
         try: 
             pool = Pool(processes=1)
-            result = pool.map(retrieval_renew_images)
+            result = pool.map(retrieval_renew_images, args.access_key, args.secret_key)
             pool.close()
             pool.join()
             for j in range(len(result)):

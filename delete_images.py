@@ -76,7 +76,7 @@ if __name__ == '__main__':
     list_all = get_list_all(args.idlist_file)
     try: 
         pool = Pool(processes=20)
-        result = pool.map(retrieval_upload_img, list_all)
+        result = pool.map(retrieval_upload_img, args.access_key, args.secret_key, list_all)
         pool.close()
         pool.join()
         for j in range(len(result)):

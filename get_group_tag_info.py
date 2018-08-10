@@ -14,7 +14,7 @@ import argparse
 import datetime
 from multiprocessing import Pool
 
-def retrieval_get_group_tag_info(marker, limit):
+def retrieval_get_group_tag_info(access_key, secret_key, marker, limit):
     """
     列出 group 的所有图片，可以按照 tag 过滤
     :param marker: 上一次列举返回的位置标记，作为本次列举的起点信息。默认值为空字符串，可选。
@@ -68,7 +68,7 @@ if __name__ == '__main__':
     
         try: 
             pool = Pool(processes=1)
-            result = pool.map(retrieval_get_group_tag_info, args.marker, args.limit)
+            result = pool.map(retrieval_get_group_tag_info, args.access_key, args.secret_key, args.marker, args.limit)
             pool.close()
             pool.join()
             for j in range(len(result)):

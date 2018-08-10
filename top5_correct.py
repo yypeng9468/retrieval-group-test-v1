@@ -2,22 +2,6 @@
 import json
 import argparse
 
-{
-    "search_results": [
-        {
-            "results":[
-                {
-                    "id":"",
-                    "score":0.9,
-                    "tag":"",
-                    "desc":{}
-                }
-            ]
-        },
-        ...
-    ]
-}
-
 def parse_args():
     """
     Parse input arguments.
