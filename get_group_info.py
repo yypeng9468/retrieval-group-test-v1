@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 调用以图搜图私有云接口识别图片
-input: access_key, secret_key, cfg
+input: access_key, secret_key
 output: json file
 
 @author: pengyuyan
@@ -15,33 +15,22 @@ import datetime
 import os
 
 
-def retrieval_new_group(access_key, secret_key, cfg):
+def retrieval_get_group_info(access_key, secret_key):
     """
-    以图搜图私有云新建 Group，单次请求创建单个 Group
-    :group_name: Group 唯一标识，长度 3-32 位，第一位必须是小写字母，其它位置是小写字母或者数字、下划线 、"-"
-    :param cfg: Group 预期图片数目，必选，必须大于0，可以自动增长，实际限制受限于内存或者显存
-    :return: 200 OK
+    以图搜图私有云获取 Group 信息，单次请求单个 Group
+    :return: 当前 group 的 tag 数量以及当前 group 的图片数目
     """
     req_url = 'http://argus.atlab.ai/v1/image/groups/test_0810'
-    config = {
-        "config":
-        {
-            "capacity": cfg
-        }
-    }
-
-        
     token = QiniuMacAuth(access_key, secret_key).token_of_request(
-        method='POST',
+        method='GET',
         host='argus.atlab.ai',
         url="/v1/image/groups/test_0810",
         content_type='application/json',
-        qheaders='',
-        body=json.dumps(data)
+        qheaders=''
     )
     token = 'Qiniu ' + token
     headers = {"Content-Type": "application/json", "Authorization": token}
-    response = requests.post(req_url, headers=headers, data=json.dumps(config))
+    response = requests.get(req_url, headers=headers)
 
     print response.text
     print response.text.replace('false', 'False').replace('true', 'True')
@@ -70,6 +59,6 @@ if __name__ == '__main__':
 
     args = parse_args()
 
-    retrieval_new_group(args.access_key, args.secret_key, args.cfg)
-
+    retrieval_get_group_info(args.access_key, args.secret_key)
+    
     print datetime.datetime.now(), 'done'

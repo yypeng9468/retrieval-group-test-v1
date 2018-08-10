@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-调用线上以图搜图接口识别图片
+调用以图搜图私有云接口识别图片
 input: urllist file
 output: json file
 
@@ -14,35 +14,29 @@ import argparse
 import datetime
 from multiprocessing import Pool
 
-#def retrieval_upload_img(access_key, secret_key, url):
 def retrieval_upload_img(url):
     """
     以图搜图传图
-    :return:
+    :param url:图片的uri, 必选
+    :return: 200 OK  {"id":""}
     """
     access_key=args.access_key
     secret_key = args.secret_key
-    req_url = 'http://argus.atlab.ai/v1/image/group/fy_test/add'
+    req_url = 'http://argus.atlab.ai/v1/image/groups/test_0810/add'
     data = {
-        "data": [
-            {"uri": url}
-            ]
-    }
-    # data = 
-    # {
-	# "data": [
-	# 	{
-	# 		"uri": "",
-	# 		"attribute": {
-	# 			"label": "fy_testsimilar"
-	# 		}
-	# 	}
-	# ]
-    # }
+        "image":
+        {
+        "id": "", # 图片唯一标识，建议采用业务系统自己的图片 url 或者文件系统路径，搜索图片会返回此 id，如果id为空，则会随机生成ID返回
+        "uri": url,
+        "tag": "", # 图片标签, 如果传空, 则默认为default
+        "desc": {} # 图片描述，可选，可以是布尔值、数字、字符串、数组和map，默认为空
+        }
+            }
+
     token = QiniuMacAuth(access_key, secret_key).token_of_request(
         method='POST',
         host='argus.atlab.ai',
-        url="/v1/image/group/fy_test/add",
+        url="/v1/image/groups/test_0810/add",
         content_type='application/json',
         qheaders='',
         body=json.dumps(data)
@@ -51,8 +45,7 @@ def retrieval_upload_img(url):
     headers = {"Content-Type": "application/json", "Authorization": token}
     response = requests.post(req_url, headers=headers, data=json.dumps(data))
 
-    print( '-'*80)
-    print(response.text)
+    print response.text
     print(response.text).replace('false', 'False').replace('true', 'True')
     ret = eval(response.text.replace('false', 'False').replace('true', 'True'))
 
@@ -102,6 +95,5 @@ if __name__ == '__main__':
         except Exception, e:
              print(e)
              error_f.writelines(str(e)+'\n')
-	     #error_f.writelines(str(result[j])+', '+str(e)+'\n')
 
     print (datetime.datetime.now(), 'done')

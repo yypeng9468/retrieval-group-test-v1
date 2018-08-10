@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-调用线上以图搜图接口识别图片
+调用以图搜图私有云接口识别图片
 input: urllist file
 output: json file
 
@@ -16,25 +16,35 @@ from multiprocessing import Pool
 
 def retrieval_search_group(url):
     """
-    根据以图搜图算法搜查图片返回相似图结果
+    输入一张或者多张图片，返回与之相似的图片列表，按相似度排序
     :param url: 要识别的图片URL
     :return:
-    """
-    access_key=args.access_key
-    secret_key = args.secret_key
-    req_url = 'http://argus.atlab.ai/v1/image/group/fy_test/search'
-    data = {
-	"data": {
-		"uri": url
-	},
-	"params": {
-		"limit": 15
-	}
+    {
+    "search_results": [
+        {
+            "results":[
+                {
+                    "id":"", # 图片唯一标识
+                    "score":0.9, # 图片搜索相似度
+                    "tag":"", # 命中图片的标签
+                    "desc":{} # 命中图片的描述信息
+                }
+            ]
+        },
+        ...
+    ]
 }
+    """
+    req_url = 'http://argus.atlab.ai/v1/image/groups/0810_test/search'
+    data = {
+        "images": url,
+        "threshold": 0.9, # 搜索图片阈值， 范围 [-1,1]，推荐 0.9  
+        "limit": 5 # 返回的单张图片搜索到的图片数目限制，范围 [1,10000]， 默认 100
+            }
     token = QiniuMacAuth(access_key, secret_key).token_of_request(
         method='POST',
         host='argus.atlab.ai',
-        url="/v1/image/group/fy_test/search",
+        url="/v1/image/groups/0810_test/search",
         content_type='application/json',
         qheaders='',
         body=json.dumps(data)
@@ -96,6 +106,5 @@ if __name__ == '__main__':
                 json_f.write(str(result[j])+'\n')
         except Exception, e:
              print(e)
-            # error_f.writelines(str(result)+', '+str(e)+'\n')   
- 
+             
     print datetime.datetime.now(), 'done'

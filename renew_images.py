@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 调用以图搜图私有云接口识别图片
-input: access_key, secret_key, cfg
+input: urllist file
 output: json file
 
 @author: pengyuyan
@@ -12,38 +12,27 @@ import json
 from qiniu import QiniuMacAuth
 import argparse
 import datetime
-import os
+from multiprocessing import Pool
 
-
-def retrieval_new_group(access_key, secret_key, cfg):
+def retrieval_renew_images(tag, marker, limit):
     """
-    以图搜图私有云新建 Group，单次请求创建单个 Group
-    :group_name: Group 唯一标识，长度 3-32 位，第一位必须是小写字母，其它位置是小写字母或者数字、下划线 、"-"
-    :param cfg: Group 预期图片数目，必选，必须大于0，可以自动增长，实际限制受限于内存或者显存
+    更新 id 对应的图片内容以及 tag、desc
     :return: 200 OK
     """
-    req_url = 'http://argus.atlab.ai/v1/image/groups/test_0810'
-    config = {
-        "config":
-        {
-            "capacity": cfg
-        }
-    }
-
-        
+    req_url = 'http://argus.atlab.ai/v1/image/groups/0810_test/update'
     token = QiniuMacAuth(access_key, secret_key).token_of_request(
         method='POST',
         host='argus.atlab.ai',
-        url="/v1/image/groups/test_0810",
+        url="v1/image/groups/0810_test/update",
         content_type='application/json',
-        qheaders='',
-        body=json.dumps(data)
+        qheaders=''
     )
     token = 'Qiniu ' + token
     headers = {"Content-Type": "application/json", "Authorization": token}
-    response = requests.post(req_url, headers=headers, data=json.dumps(config))
+    response = requests.post(req_url, headers=headers)
 
     print response.text
+    print response.headers
     print response.text.replace('false', 'False').replace('true', 'True')
     ret = eval(response.text.replace('false', 'False').replace('true', 'True'))
 
@@ -67,9 +56,17 @@ def parse_args():
 
 
 if __name__ == '__main__':
-
     args = parse_args()
-
-    retrieval_new_group(args.access_key, args.secret_key, args.cfg)
-
+    
+        try: 
+            pool = Pool(processes=1)
+            result = pool.map(retrieval_renew_images)
+            pool.close()
+            pool.join()
+            for j in range(len(result)):
+                json_f.write(str(result[j])+'\n')
+        except Exception, e:
+             print(e)
+             
+ 
     print datetime.datetime.now(), 'done'
