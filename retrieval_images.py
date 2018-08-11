@@ -14,7 +14,7 @@ import argparse
 import datetime
 from multiprocessing import Pool
 
-def retrieval_search_group(access_key, secret_key, url):
+def retrieval_search_group(url):
     """
     输入一张或者多张图片，返回与之相似的图片列表，按相似度排序
     :param url: 要识别的图片URL
@@ -24,7 +24,7 @@ def retrieval_search_group(access_key, secret_key, url):
         {
             "results":[
                 {
-                    "id":"", # 图片唯一标识
+                    "id":id, # 图片唯一标识
                     "score":0.9, # 图片搜索相似度
                     "tag":"", # 命中图片的标签
                     "desc":{} # 命中图片的描述信息
@@ -35,22 +35,14 @@ def retrieval_search_group(access_key, secret_key, url):
     ]
 }
     """
-    req_url = 'http://argus.atlab.ai/v1/image/groups/0810_test/search'
+    req_url = 'http://221.122.92.62:6126/v1/image/groups/test_0810_query/search'
+    urls = [url]
     data = {
-        "images": url,
+        "images": urls,
         "threshold": 0.9, # 搜索图片阈值， 范围 [-1,1]，推荐 0.9  
         "limit": 5 # 返回的单张图片搜索到的图片数目限制，范围 [1,10000]， 默认 100
             }
-    token = QiniuMacAuth(access_key, secret_key).token_of_request(
-        method='POST',
-        host='argus.atlab.ai',
-        url="/v1/image/groups/0810_test/search",
-        content_type='application/json',
-        qheaders='',
-        body=json.dumps(data)
-    )
-    token = 'Qiniu ' + token
-    headers = {"Content-Type": "application/json", "Authorization": token}
+    headers = {"Content-Type": "application/json"}
     response = requests.post(req_url, headers=headers, data=json.dumps(data))
 
     print response.text
@@ -70,11 +62,6 @@ def parse_args():
     :return:
     """
     parser = argparse.ArgumentParser(description='以图搜图API测试')
-    parser.add_argument('--ak', dest='access_key', help='access_key for qiniu account',
-                        type=str)
-
-    parser.add_argument('--sk', dest='secret_key', help='secret_key for qiniu account',
-                        type=str)
 
     parser.add_argument('--in', dest='urllist_file', help='urllist file',
                         type=str)
@@ -98,8 +85,8 @@ if __name__ == '__main__':
 
         list_all = get_list_all(args.urllist_file)
         try: 
-            pool = Pool(processes=1)
-            result = pool.map(retrieval_search_group, args.access_key, args.secret_key, list_all)
+            pool = Pool(processes=5)
+            result = pool.map(retrieval_search_group, list_all)
             pool.close()
             pool.join()
             for j in range(len(result)):

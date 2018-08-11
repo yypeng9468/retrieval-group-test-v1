@@ -14,39 +14,28 @@ import argparse
 import datetime
 from multiprocessing import Pool
 
-def retrieval_upload_img(access_key, secret_key, url):
+def retrieval_upload_img(url):
     """
     以图搜图传图
     :param url:图片的uri, 必选
     :return: 200 OK  {"id":""}
     """
-    access_key=args.access_key
-    secret_key = args.secret_key
-    req_url = 'http://argus.atlab.ai/v1/image/groups/test_0810/add'
+    req_url = 'http://221.122.92.62:6126/v1/image/groups/test_0810_query/add'
     data = {
         "image":
         {
-        "id": "", # 图片唯一标识，建议采用业务系统自己的图片 url 或者文件系统路径，搜索图片会返回此 id，如果id为空，则会随机生成ID返回
+        "id": url, # 图片唯一标识，建议采用业务系统自己的图片 url 或者文件系统路径，搜索图片会返回此 id，如果id为空，则会随机生成ID返回
         "uri": url,
         "tag": "", # 图片标签, 如果传空, 则默认为default
         "desc": {} # 图片描述，可选，可以是布尔值、数字、字符串、数组和map，默认为空
         }
             }
 
-    token = QiniuMacAuth(access_key, secret_key).token_of_request(
-        method='POST',
-        host='argus.atlab.ai',
-        url="/v1/image/groups/test_0810/add",
-        content_type='application/json',
-        qheaders='',
-        body=json.dumps(data)
-    )
-    token = 'Qiniu ' + token
-    headers = {"Content-Type": "application/json", "Authorization": token}
+    headers = {"Content-Type": "application/json"}
     response = requests.post(req_url, headers=headers, data=json.dumps(data))
 
-    print response.text
-    print(response.text).replace('false', 'False').replace('true', 'True')
+    # print response.text
+    # print(response.text).replace('false', 'False').replace('true', 'True')
     ret = eval(response.text.replace('false', 'False').replace('true', 'True'))
 
     print(json.dumps(ret, encoding="utf-8", ensure_ascii=False))
@@ -59,11 +48,6 @@ def parse_args():
     :return:
     """
     parser = argparse.ArgumentParser(description='以图搜图API测试')
-    parser.add_argument('--ak', dest='access_key', help='access_key for qiniu account',
-                        type=str)
-
-    parser.add_argument('--sk', dest='secret_key', help='secret_key for qiniu account',
-                        type=str)
 
     parser.add_argument('--in', dest='urllist_file', help='urllist file',
                         type=str)
@@ -87,8 +71,8 @@ if __name__ == '__main__':
         len_file = len(url)
         list_all = get_list_all(args.urllist_file)
         try: 
-            pool = Pool(processes=20)
-            result = pool.map(retrieval_upload_img, args.access_key, args.secret_key, list_all)
+            pool = Pool(processes=5)
+            result = pool.map(retrieval_upload_img, list_all)
             pool.close()
             pool.join()
             for j in range(len(result)):

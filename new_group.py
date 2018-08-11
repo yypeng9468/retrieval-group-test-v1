@@ -15,31 +15,23 @@ import datetime
 import os
 
 
-def retrieval_new_group(access_key, secret_key, cfg):
+def retrieval_new_group(cfg):
     """
     以图搜图私有云新建 Group，单次请求创建单个 Group
     :group_name: Group 唯一标识，长度 3-32 位，第一位必须是小写字母，其它位置是小写字母或者数字、下划线 、"-"
     :param cfg: Group 预期图片数目，必选，必须大于0，可以自动增长，实际限制受限于内存或者显存
     :return: 200 OK
     """
-    req_url = 'http://argus.atlab.ai/v1/image/groups/test_0810'
+    req_url = 'http://221.122.92.62:6126/v1/image/groups/test_0810_query'
     config = {
-        "config":
-        {
-            "capacity": cfg
-        }
-    }
+         "config":
+         {
+             "capacity": cfg
+         }
+     }
 
-    token = QiniuMacAuth(access_key, secret_key).token_of_request(
-        method='POST',
-        host='argus.atlab.ai',
-        url="/v1/image/groups/test_0810",
-        content_type='application/json',
-        qheaders='',
-        body=json.dumps(data)
-    )
-    token = 'Qiniu ' + token
-    headers = {"Content-Type": "application/json", "Authorization": token}
+
+    headers = {"Content-Type": "application/json"}
     response = requests.post(req_url, headers=headers, data=json.dumps(config))
 
     print response.text
@@ -61,8 +53,8 @@ def parse_args():
 
     parser.add_argument('--sk', dest='secret_key', help='secret_key for qiniu account',
                         type=str)
-    parser.add_argument('--config', dest='cfg', help='预期图片数目',
-                        type=str)
+    parser.add_argument('--cfg', dest='config', help='预期图片数目', type=int,
+                        default=300000)
 
     return parser.parse_args()
 
@@ -71,6 +63,6 @@ if __name__ == '__main__':
 
     args = parse_args()
 
-    retrieval_new_group(args.access_key, args.secret_key, args.cfg)
+    retrieval_new_group(args.cfg)
 
     print datetime.datetime.now(), 'done'

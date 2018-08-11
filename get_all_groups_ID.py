@@ -15,21 +15,13 @@ import datetime
 import os
 
 
-def retrieval_get_group_id(access_key, secret_key):
+def retrieval_get_group_id():
     """
     以图搜图私有云获取所有Group ID
     :return: 所有Group ID
     """
-    req_url = 'http://argus.atlab.ai/v1/image/groups'
-    token = QiniuMacAuth(access_key, secret_key).token_of_request(
-        method='GET',
-        host='argus.atlab.ai',
-        url="/v1/image/groups",
-        content_type='application/json',
-        qheaders=''
-    )
-    token = 'Qiniu ' + token
-    headers = {"Content-Type": "application/json", "Authorization": token}
+    req_url = 'http://221.122.92.62:6126/v1/image/groups'
+    headers = {"Content-Type": "application/json"}
     response = requests.get(req_url, headers=headers)
 
     print response.text
@@ -40,25 +32,9 @@ def retrieval_get_group_id(access_key, secret_key):
     return json.dumps(ret, encoding="utf-8", ensure_ascii=False)
 
 
-def parse_args():
-    """
-    Parse input arguments.
-    :return:
-    """
-    parser = argparse.ArgumentParser(description='以图搜图API测试')
-    parser.add_argument('--ak', dest='access_key', help='access_key for qiniu account',
-                        type=str)
-
-    parser.add_argument('--sk', dest='secret_key', help='secret_key for qiniu account',
-                        type=str)
-
-    return parser.parse_args()
-
 
 if __name__ == '__main__':
 
-    args = parse_args()
-
-    retrieval_get_group_id(args.access_key, args.secret_key)
+    retrieval_get_group_id()
     
     print datetime.datetime.now(), 'done'
