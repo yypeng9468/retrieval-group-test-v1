@@ -20,7 +20,7 @@ def retrieval_upload_img(url):
     :param url:图片的uri, 必选
     :return: 200 OK  {"id":""}
     """
-    req_url = 'http://221.122.92.62:6126/v1/image/groups/test_0810_query/add'
+    req_url = 'http://221.122.92.62:6126/v1/image/groups/test_0812/add'
     data = {
         "image":
         {

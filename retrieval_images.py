@@ -35,12 +35,12 @@ def retrieval_search_group(url):
     ]
 }
     """
-    req_url = 'http://221.122.92.62:6126/v1/image/groups/test_0810_query/search'
+    req_url = 'http://221.122.92.62:6126/v1/image/groups/test_0812/search'
     urls = [url]
     data = {
         "images": urls,
-        "threshold": 0.9, # 搜索图片阈值， 范围 [-1,1]，推荐 0.9  
-        "limit": 5 # 返回的单张图片搜索到的图片数目限制，范围 [1,10000]， 默认 100
+        "threshold": 0, # 搜索图片阈值， 范围 [-1,1]，推荐 0.9  
+        "limit": 50 # 返回的单张图片搜索到的图片数目限制，范围 [1,10000]， 默认 100
             }
     headers = {"Content-Type": "application/json"}
     response = requests.post(req_url, headers=headers, data=json.dumps(data))

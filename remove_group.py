@@ -20,7 +20,7 @@ def retrieval_remove_group():
     销毁 Group，单次请求删除单个 Group
     :return: 200 OK
     """
-    req_url = 'http://221.122.92.62:6126/v1/image/groups/test_0810_query/remove'
+    req_url = 'http://221.122.92.62:6126/v1/image/groups/test_0812/remove'
     headers = {"Content-Type": "application/json"}
     response = requests.post(req_url, headers=headers)
 

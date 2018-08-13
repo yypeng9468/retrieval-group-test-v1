@@ -22,7 +22,7 @@ def retrieval_new_group(cfg):
     :param cfg: Group 预期图片数目，必选，必须大于0，可以自动增长，实际限制受限于内存或者显存
     :return: 200 OK
     """
-    req_url = 'http://221.122.92.62:6126/v1/image/groups/test_0810_query'
+    req_url = 'http://221.122.92.62:6126/v1/image/groups/test_0813_v1'
     config = {
          "config":
          {
@@ -63,6 +63,6 @@ if __name__ == '__main__':
 
     args = parse_args()
 
-    retrieval_new_group(args.cfg)
+    retrieval_new_group(args.config)
 
     print datetime.datetime.now(), 'done'
