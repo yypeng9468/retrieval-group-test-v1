@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import argparse
+import numpy as np
 
 def parse_args():
     """
@@ -42,15 +43,21 @@ if __name__ == '__main__':
                     t["differ_uri"].append(result["id"])
             res.append(t)
 
-    p = 0
-    r = 0
+    pr = []
     for i in range(a):
-        p += res[i]["true"]
-        if res[i]["true"]>=1:
-            r += 1
+        pr.append(res[i]["true"])
+
+        
             
     k = args.top_k
-    precision = p/(float(a-1)*k)
-    recall = r/float(a-1)
+    precision = np.sum(pr)/float(k*a)
+    re = 0
+    for r in pr:
+        if r == 15:
+            re += 15/15 
+        else:
+            re += r/float(k)
+
+    recall = re/float(a)
     print ("The top-5 correct percentage is %f" % precision)
     print ("The recall percentage is %f" % recall)

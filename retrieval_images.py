@@ -35,7 +35,7 @@ def retrieval_search_group(url):
     ]
 }
     """
-    req_url = 'http://221.122.92.62:6126/v1/image/groups/test_0812/search'
+    req_url = 'http://100.100.58.71:6126/v1/image/groups/test_0813_v1/search'
     urls = [url]
     data = {
         "images": urls,
@@ -85,7 +85,7 @@ if __name__ == '__main__':
 
         list_all = get_list_all(args.urllist_file)
         try: 
-            pool = Pool(processes=5)
+            pool = Pool(processes=1)
             result = pool.map(retrieval_search_group, list_all)
             pool.close()
             pool.join()

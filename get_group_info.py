@@ -20,7 +20,7 @@ def retrieval_get_group_info():
     以图搜图私有云获取 Group 信息，单次请求单个 Group
     :return: 当前 group 的 tag 数量以及当前 group 的图片数目
     """
-    req_url = 'http://221.122.92.62:6126/v1/image/groups/test_0812'
+    req_url = 'http://100.100.58.46:6126/v1/image/groups/test_0813'
     headers = {"Content-Type": "application/json"}
     response = requests.get(req_url, headers=headers)
 

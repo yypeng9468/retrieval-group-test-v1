@@ -23,7 +23,7 @@ def retrieval_get_group_id(tag, marker, limit):
     :param limit: 本次列举的条目数，范围为 1-1000。默认值为 1000。
     :return:
     """
-    req_url = 'http://221.122.92.62:6126/v1/image/groups/test_0810_query/images?tag={}&marker={}&limit={}'.format(tag, marker, limit)
+    req_url = 'http://100.100.58.71:6126/v1/image/groups/test_0813_v1/images?tag={}&marker={}&limit={}'.format(tag, marker, limit)
     headers = {"Content-Type": "application/json"}
     response = requests.get(req_url, headers=headers)
 

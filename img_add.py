@@ -20,7 +20,7 @@ def retrieval_upload_img(url):
     :param url:图片的uri, 必选
     :return: 200 OK  {"id":""}
     """
-    req_url = 'http://221.122.92.62:6126/v1/image/groups/test_0812/add'
+    req_url = 'http://100.100.58.71:6126/v1/image/groups/test_0813_v1/add'
     data = {
         "image":
         {
@@ -71,7 +71,7 @@ if __name__ == '__main__':
         len_file = len(url)
         list_all = get_list_all(args.urllist_file)
         try: 
-            pool = Pool(processes=5)
+            pool = Pool(processes=20)
             result = pool.map(retrieval_upload_img, list_all)
             pool.close()
             pool.join()
