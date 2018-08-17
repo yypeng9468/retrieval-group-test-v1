@@ -22,7 +22,7 @@ def retrieval_new_group(cfg):
     :param cfg: Group 预期图片数目，必选，必须大于0，可以自动增长，实际限制受限于内存或者显存
     :return: 200 OK
     """
-    req_url = 'http://100.100.58.71:6126/v1/image/groups/test_0813_v1'
+    req_url = 'http://100.100.58.46:6126/v1/image/groups/test_0817'
     config = {
          "config":
          {

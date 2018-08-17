@@ -24,8 +24,8 @@ def retrieval_get_group_tag_info(limit, marker):
     req_url = 'http://221.122.92.62:6126/v1/image/groups/test_0810_query/tags?limit={}&marker='.format(limit, marker)
     
     print(req_url)
-    headers = {"Content-Type": "application/json"}
-    response = requests.post(req_url, headers=headers)
+    # headers = {"Content-Type": "application/json"}
+    response = requests.post(req_url)
 
     print response.text
     print response.text.replace('false', 'False').replace('true', 'True')

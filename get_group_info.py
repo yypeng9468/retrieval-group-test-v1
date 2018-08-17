@@ -21,8 +21,8 @@ def retrieval_get_group_info():
     :return: 当前 group 的 tag 数量以及当前 group 的图片数目
     """
     req_url = 'http://100.100.58.46:6126/v1/image/groups/test_0813'
-    headers = {"Content-Type": "application/json"}
-    response = requests.get(req_url, headers=headers)
+    # headers = {"Content-Type": "application/json"}
+    response = requests.get(req_url)
 
     print response.text
     print response.text.replace('false', 'False').replace('true', 'True')

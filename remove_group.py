@@ -21,8 +21,8 @@ def retrieval_remove_group():
     :return: 200 OK
     """
     req_url = 'http://100.100.58.71:6126/v1/image/groups/test_0813_v1/remove'
-    headers = {"Content-Type": "application/json"}
-    response = requests.post(req_url, headers=headers)
+    # headers = {"Content-Type": "application/json"}
+    response = requests.post(req_url)
 
     print response.text
     print response.text.replace('false', 'False').replace('true', 'True')

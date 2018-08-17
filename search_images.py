@@ -24,8 +24,8 @@ def retrieval_get_group_id(tag, marker, limit):
     :return:
     """
     req_url = 'http://100.100.58.71:6126/v1/image/groups/test_0813_v1/images?tag={}&marker={}&limit={}'.format(tag, marker, limit)
-    headers = {"Content-Type": "application/json"}
-    response = requests.get(req_url, headers=headers)
+    # headers = {"Content-Type": "application/json"}
+    response = requests.get(req_url)
 
     print response.text
     # print response.text.replace('false', 'False').replace('true', 'True')

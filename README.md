@@ -61,10 +61,10 @@ python2 search_images.py --tag tag --marker marker --limit limit
 
 python2 get_group_tag_info.py --marker marker --limit limit
 
-## 1.11 获取top5准确率
+## 1.11 获取top5准确率以及召回率
 
-获取算法返回结果的topk准确率
+获取算法返回结果的topk准确率以及召回率
 
-python2 top5_correct.py --in json_file
+python2 eval.py --in json_file
 
 

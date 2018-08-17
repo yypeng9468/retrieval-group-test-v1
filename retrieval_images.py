@@ -35,7 +35,7 @@ def retrieval_search_group(url):
     ]
 }
     """
-    req_url = 'http://100.100.58.71:6126/v1/image/groups/test_0813_v1/search'
+    req_url = 'http://100.100.58.46:6126/v1/image/groups/test_0817/search'
     urls = [url]
     data = {
         "images": urls,

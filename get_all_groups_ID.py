@@ -21,8 +21,8 @@ def retrieval_get_group_id():
     :return: 所有Group ID
     """
     req_url = 'http://221.122.92.62:6126/v1/image/groups'
-    headers = {"Content-Type": "application/json"}
-    response = requests.get(req_url, headers=headers)
+    # headers = {"Content-Type": "application/json"}
+    response = requests.get(req_url)
 
     print response.text
     print response.text.replace('false', 'False').replace('true', 'True')
